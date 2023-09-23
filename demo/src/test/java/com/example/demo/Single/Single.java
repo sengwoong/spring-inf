@@ -4,11 +4,13 @@ import com.example.demo.AppConfig;
 import com.example.demo.member.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public class Single {
+public class Single{
 
     @Test
     @DisplayName("스프링 없는 순수한 DI 컨테이너")
@@ -40,5 +42,20 @@ public class Single {
 // singletonService1 == singletonService2
         assertSame(singletonService1, singletonService2);
         singletonService1.logic();
+    }
+
+    @Test
+    @DisplayName("스프링 컨테이너 싱글톤")
+    void springContainer(){
+        ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
+
+        // 빈을 조회
+        MemberService memberService1 = ac.getBean(MemberService.class);
+        MemberService memberService2 = ac.getBean(MemberService.class);
+        // memberService1과 memberService2가 동일한 인스턴스인지 확인
+        boolean isSameInstance = (memberService1 == memberService2);
+        assertSame(memberService1 ,memberService2);
+        // 결과 출력
+        System.out.println("memberService1과 memberService2는 동일한 인스턴스인가? " + isSameInstance);
     }
 }

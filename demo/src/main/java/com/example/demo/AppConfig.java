@@ -2,6 +2,7 @@ package com.example.demo;
 
 
 import com.example.demo.discount.FixDiscountPolicey;
+import com.example.demo.member.MemberRepository;
 import com.example.demo.member.MemberService;
 import com.example.demo.member.MemberserviceImpl;
 import com.example.demo.member.MemoryMemberRepository;
@@ -16,20 +17,23 @@ public class AppConfig {
     public MemberService memberService(){
 
     // 생성자함수로 뺴서들고오기 컨트롤 알트 m
-    return  new MemberserviceImpl(getMemberRepository());
+    return  new MemberserviceImpl(memberRepository());
 
         }
     @Bean
-    public MemoryMemberRepository getMemberRepository() {
+    public MemoryMemberRepository memberRepository() {
         return new MemoryMemberRepository();
     }
+
+
     @Bean
     public  OrderService orderService(){
-    return  new OrderServiceImpl(getMemberRepository(), getDiscountPolicy());
+    return  new OrderServiceImpl(memberRepository(), getDiscountPolicy());
 }
 
     @Bean
     public FixDiscountPolicey getDiscountPolicy() {
         return new FixDiscountPolicey();
     }
+
 }

@@ -30,4 +30,7 @@ public class OrderServiceImpl  implements  OrderService{
 
         // 똑같은 함수만들기 커맨드옵션 m
     }
+    public MemberRepository getMemberRepository() {
+        return memberRepository;
+    }
 }
